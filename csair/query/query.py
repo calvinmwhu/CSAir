@@ -119,13 +119,37 @@ def main():
         '3h': ghc
     }
 
-    print("""
+    print(
+        """
         FAQ:
-    1: List of all the cities that CSAir flies to
-    Please select the question number
-    """)
+        1.  List of all the cities that CSAir flies to
+        2.  Information about a specific city in the CSAir route network
+        3a. Longest single flight in the network
+        3b. Shortest single flight in the network
+        3c. Average distance of all the flights in the network
+        3d. Biggest city (by population) served by CSAir
+        3e. Smallest city (by population) served by CSAir
+        3f. Average size (by population) of all the cities served by CSAir
+        3g. List of the continents served by CSAir and which cities are in them
+        3h. CSAir's hub cities – the cities that have the most direct connections
+
+        """
+    )
 
     while True:
+        question = str(input("\nPlease select the question number: \n"))
+        if question not in queries:
+            print("cannot answer your question")
+        elif question == '2':
+            code = str(input("Please enter the city's code: \n"))
+            code = code.upper()
+            city = queries[question](code)
+            if  city == None:
+                print("Cannot find city with code ", code)
+            else:
+                print(city)
+        else:
+            print(queries[question]())
 
 #
 # print(query.get_all_cities())

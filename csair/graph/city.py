@@ -31,4 +31,3 @@ class City:
         return str(city_dict)
 
 
-# print(id(City))
