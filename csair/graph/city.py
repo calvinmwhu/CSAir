@@ -18,7 +18,17 @@ class City:
         self.incidents[city] = dist
 
     def __str__(self):
-        return self.code+": "+ str(self.incidents)
+        city_dict = {}
+        city_dict['code'] = self.code
+        city_dict['name'] = self.name
+        city_dict['country'] = self.country
+        city_dict['continent'] = self.continent
+        city_dict['timezone'] = self.timezone
+        city_dict['coordinates'] = self.coordinates
+        city_dict['population'] = self.population
+        city_dict['region'] = self.region
+        city_dict['accessible cities'] = str(self.incidents)
+        return str(city_dict)
 
 
 # print(id(City))
