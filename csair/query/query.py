@@ -4,6 +4,9 @@ import sys
 
 
 class Query:
+    """
+    Query class is responsible for returning data based on user's query
+    """
     def __init__(self):
         self.map = RouteMap()
         self.map.parse_data(RouteMap.url_link)
@@ -12,17 +15,27 @@ class Query:
         self.map.construct_map()
 
     def get_all_cities(self):
+        """
+        :return: all the cities in CSAir
+        """
         city_list = []
         for city in self.map.cities.values():
             city_list.append(city.name)
         return city_list
 
     def get_city_info(self, code):
+        """
+        :param code: a city's code
+        :return: all the info of the city with code code, None if city with the code does not exist
+        """
         if code not in self.map.cities.keys():
             return None
         return self.map.cities[code]
 
     def get_longest_single_flight(self):
+        """
+        :return: A flight object that covers the longest distance
+        """
         longest_dist = 0
         longest_flight = []
         for route in self.map.routes:
@@ -32,6 +45,9 @@ class Query:
         return longest_flight
 
     def get_shortest_single_flight(self):
+        """
+        :return: A flight object that covers the shortest distance
+        """
         shortest_dist = sys.maxsize
         shortest_flight = []
         for route in self.map.routes:
@@ -41,6 +57,9 @@ class Query:
         return shortest_flight
 
     def get_average_distance(self):
+        """
+        :return: average of all the routes in terms of the distance
+        """
         ave = 0
         for route in self.map.routes:
             ave = ave + route['distance']
@@ -48,6 +67,9 @@ class Query:
         return ave
 
     def get_biggest_city(self):
+        """
+        :return: City with highest population
+        """
         name = ""
         biggest = 0
         for city in self.map.cities.values():
@@ -58,6 +80,9 @@ class Query:
 
 
     def get_smallest_city(self):
+        """
+        :return: City with the lowest population
+        """
         name = ""
         smallest = sys.maxsize
         for city in self.map.cities.values():
@@ -67,6 +92,9 @@ class Query:
         return {name: smallest}
 
     def get_cities_average_size(self):
+        """
+        :return: Average population of all the cities
+        """
         ave = 0
         for city in self.map.cities.values():
             ave = ave + city.population
@@ -74,6 +102,9 @@ class Query:
         return ave
 
     def get_continents(self):
+        """
+        :return: A dictionary that group cities based on the continent they belong to
+        """
         continents = {}
         for city in self.map.cities.values():
             if city.continent not in continents:
@@ -83,6 +114,9 @@ class Query:
         return continents
 
     def get_hub_cities(self):
+        """
+        :return: City with the highest number of edges
+        """
         hub = City()
         connections = 0
         for city in self.map.cities.values():
