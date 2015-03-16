@@ -10,15 +10,14 @@ class Query:
         self.map = Graph()
         self.map.parse_data(Graph.url_link)
         self.map.get_nodes()
-        self.map.get_routes()
-        self.map.construct_map()
+        self.map.get_edges()
 
     def get_all_cities(self):
         """
         :return: all the cities in CSAir
         """
         city_list = []
-        for city in self.map.cities.values():
+        for city in self.map.nodes.values():
             city_list.append(city.name)
         return city_list
 
@@ -27,9 +26,9 @@ class Query:
         :param code: a city's code
         :return: all the info of the city with code code, none if city with the code does not exist
         """
-        if code not in self.map.cities.keys():
+        if code not in self.map.nodes.keys():
             return None
-        return self.map.cities[code]
+        return self.map.nodes[code]
 
     def get_longest_single_flight(self):
         """
@@ -38,9 +37,9 @@ class Query:
         longest_dist = 0
         longest_flight = []
         for route in self.map.routes:
-            if route['distance'] > longest_dist:
-                longest_dist = route['distance']
-                longest_flight = route['ports']
+            if route.distance > longest_dist:
+                longest_dist = route.distance
+                longest_flight = route.ports
         return longest_flight
 
     def get_shortest_single_flight(self):
@@ -50,9 +49,9 @@ class Query:
         shortest_dist = sys.maxsize
         shortest_flight = []
         for route in self.map.routes:
-            if route['distance'] < shortest_dist:
-                shortest_dist = route['distance']
-                shortest_flight = route['ports']
+            if route.distance < shortest_dist:
+                shortest_dist = route.distance
+                shortest_flight = route.ports
         return shortest_flight
 
     def get_average_distance(self):
@@ -61,7 +60,7 @@ class Query:
         """
         ave = 0
         for route in self.map.routes:
-            ave = ave + route['distance']
+            ave = ave + route.distance
         ave = ave / len(self.map.routes)
         return ave
 
@@ -71,7 +70,7 @@ class Query:
         """
         name = ""
         biggest = 0
-        for city in self.map.cities.values():
+        for city in self.map.nodes.values():
             if city.population > biggest:
                 biggest = city.population
                 name = city.name
@@ -84,7 +83,7 @@ class Query:
         """
         name = ""
         smallest = sys.maxsize
-        for city in self.map.cities.values():
+        for city in self.map.nodes.values():
             if city.population < smallest:
                 smallest = city.population
                 name = city.name
@@ -95,9 +94,9 @@ class Query:
         :return: Average population of all the cities
         """
         ave = 0
-        for city in self.map.cities.values():
+        for city in self.map.nodes.values():
             ave = ave + city.population
-        ave = ave / len(self.map.cities)
+        ave = ave / len(self.map.nodes)
         return ave
 
     def get_continents(self):
@@ -105,7 +104,7 @@ class Query:
         :return: A dictionary that group cities based on the continent they belong to
         """
         continents = {}
-        for city in self.map.cities.values():
+        for city in self.map.nodes.values():
             if city.continent not in continents:
                 continents[city.continent] = [city.name]
             else:
@@ -117,14 +116,16 @@ class Query:
         :return: City with the highest number of edges
         """
         hub = Node()
+        neighbour_edges = {}
         connections = 0
-        for city in self.map.cities.values():
-            num_incident_cities = len(city.incidents)
-            if len(city.incidents) > connections:
+        for city_code in self.map.edges.keys():
+            neighbours = self.map.edges[city_code]
+            num_incident_cities = len(neighbours)
+            if num_incident_cities > connections:
                 connections = num_incident_cities
-                hub = city
-        return {hub.name: hub.incidents}
-
+                hub = self.map.nodes[city_code]
+                neighbour_edges = neighbours
+        return {hub.name: neighbour_edges.keys()}
 
 def main():
     query = Query()

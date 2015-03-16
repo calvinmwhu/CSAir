@@ -15,11 +15,10 @@ class Graph:
         constructor: initializes cities and json_obj to empty objects, initializes route to empty array
         :return:
         """
-        self.cities = {}
-        self.routes = []
         self.json_obj = {}
         self.nodes = {}
         self.edges = {}
+        self.routes = []
 
     def parse_data(self, url_str=None):
         """
@@ -42,7 +41,7 @@ class Graph:
         """
         for item in self.json_obj['metros']:
             node = Node(item)
-            self.cities[node.code] = node
+            self.nodes[node.code] = node
 
     def get_edges(self):
         """
@@ -51,6 +50,7 @@ class Graph:
         """
         for item in self.json_obj['routes']:
             edge = Edge(item)
+            self.routes.append(edge)
             key1 = edge.ports[0]
             key2 = edge.ports[1]
             if key1 not in self.edges:

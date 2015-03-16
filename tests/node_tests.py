@@ -24,9 +24,7 @@ class TestCity(unittest.TestCase):
         self.assertEqual(self.obj['population'], self.city.population)
         self.assertEqual(self.obj['region'], self.city.region)
 
-    def test_add_neighbour(self):
-        self.city.add_neighbour('MEX',4231)
-        self.assertEqual(self.city.incidents['MEX'],4231)
+        print(self.city)
 
 if __name__ == '__main__':
     unittest.main()

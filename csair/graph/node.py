@@ -17,19 +17,9 @@ class Node:
             self.coordinates = obj['coordinates']
             self.population = obj['population']
             self.region = obj['region']
-            self.incidents = {}
         except KeyError as e:
             print(e)
 
-
-    def add_neighbour(self, city, dist):
-        """
-        Add a neighbour to the incidents dictionary; it represents an edge that comes out of this node
-        :param city: A neighbour's code
-        :param dist: Distance between this node and the neighbour
-        :return:
-        """
-        self.incidents[city] = dist
 
     def __str__(self):
         """
@@ -45,7 +35,6 @@ class Node:
         city_dict['coordinates'] = self.coordinates
         city_dict['population'] = self.population
         city_dict['region'] = self.region
-        city_dict['accessible cities'] = str(self.incidents)
         return str(city_dict)
 
 

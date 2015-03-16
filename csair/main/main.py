@@ -9,8 +9,7 @@ def main():
     map.get_edges()
 
     print(map.edges)
-    # map.get_routes()
-    # map.construct_map()
+    print(map.edges['BOG'])
 
 
 if __name__ == "__main__":
