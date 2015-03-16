@@ -60,26 +60,5 @@ class Graph:
             self.edges[key1][key2] = edge.distance
             self.edges[key2][key1] = edge.distance
 
-    def get_routes(self):
-        """
-        Constructs routes array from the JSON object
-        :return:
-        """
-        self.routes = self.json_obj['routes']
-
-    def construct_map(self):
-        """
-        Populates each city's neighbours from the routes object
-        :return:
-        """
-        for route in self.routes:
-            key1 = route['ports'][0]
-            key2 = route['ports'][1]
-            if key1 in self.cities.keys() and key2 in self.cities.keys():
-                city1 = self.cities[key1]
-                city2 = self.cities[key2]
-                city1.add_neighbour(city2.code, route['distance'])
-
-
 
 

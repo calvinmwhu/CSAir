@@ -11,8 +11,7 @@ class Visualizer:
         self.map = Graph()
         self.map.parse_data(Graph.url_link)
         self.map.get_nodes()
-        self.map.get_routes()
-        self.map.construct_map()
+        self.map.get_edges()
 
 
     def find_all_route(self):
@@ -22,7 +21,7 @@ class Visualizer:
         """
         all_route = []
         for route in self.map.routes:
-            all_route.append(route['ports'][0] + '-' + route['ports'][1])
+            all_route.append(route.ports[0] + '-' + route.ports[1])
         return Visualizer.map_url_prefix+','.join(all_route)
 
 def main():
