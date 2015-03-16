@@ -1,5 +1,4 @@
 from csair.graph.graph import Graph
-from csair.graph.node import Node
 
 
 class Visualizer:

@@ -1,3 +1,5 @@
+import copy
+
 class Node:
     """
     A city defines a node in the graph.
@@ -14,7 +16,7 @@ class Node:
             self.country = obj['country']
             self.continent = obj['continent']
             self.timezone = obj['timezone']
-            self.coordinates = obj['coordinates']
+            self.coordinates = copy.deepcopy(obj['coordinates'])
             self.population = obj['population']
             self.region = obj['region']
         except KeyError as e:

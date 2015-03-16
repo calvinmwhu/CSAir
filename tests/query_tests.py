@@ -1,5 +1,4 @@
 import unittest
-from csair.graph.graph import Graph
 from csair.query.query import Query
 
 
