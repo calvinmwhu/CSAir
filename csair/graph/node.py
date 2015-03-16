@@ -1,4 +1,4 @@
-class City:
+class Node:
     """
     A city defines a node in the graph.
     """

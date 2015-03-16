@@ -1,6 +1,6 @@
-from csair.graph import city
+from csair.graph import node
 
-class Route:
+class Edge:
     """
     Defines an edge in a graph; contains the origin, destination nodes and the distance between them
     """

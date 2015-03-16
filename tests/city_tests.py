@@ -1,5 +1,5 @@
 import unittest
-from csair.graph.city import City
+from csair.graph.node import Node
 
 
 class TestCity(unittest.TestCase):
@@ -12,7 +12,7 @@ class TestCity(unittest.TestCase):
                     'coordinates': {"S": 12, "W": 77},
                     'population': 9050000,
                     'region': 1}
-        self.city = City(self.obj)
+        self.city = Node(self.obj)
 
     def test_init(self):
         self.assertEqual(self.obj['code'], self.city.code)

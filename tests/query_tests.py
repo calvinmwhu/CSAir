@@ -1,5 +1,5 @@
 import unittest
-from csair.graph.route_map import RouteMap
+from csair.graph.graph import Graph
 from csair.query.query import Query
 
 

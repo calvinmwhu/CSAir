@@ -1,12 +1,12 @@
-from csair.graph.city import City
-from csair.graph.route import Route
+from csair.graph.node import Node
+from csair.graph.edge import Edge
 import json
 import urllib.request
 
 
-class RouteMap:
+class Graph:
     """
-    this class is responsible for creating a RouteMap instance that get data from the web and parse it into its own data structure, i.e. cities and routes
+    this class is responsible for creating a RouteMap instance that gets data from the web and parse it into its own data structure, i.e. cities and routes
     """
     url_link = 'https://wiki.cites.illinois.edu/wiki/download/attachments/502596813/map_data.json?version=1&modificationDate=1408551729000&api=v2'
 
@@ -18,6 +18,8 @@ class RouteMap:
         self.cities = {}
         self.routes = []
         self.json_obj = {}
+        self.nodes = {}
+        self.edges = {}
 
     def parse_data(self, url_str=None):
         """
@@ -33,14 +35,30 @@ class RouteMap:
         map_data = data_file.read().decode('utf-8')
         self.json_obj = json.loads(map_data)
 
-    def get_cites(self):
+    def get_nodes(self):
         """
         Constructs city objects from the json_obj
         :return:
         """
         for item in self.json_obj['metros']:
-            city = City(item)
-            self.cities[city.code] = city
+            node = Node(item)
+            self.cities[node.code] = node
+
+    def get_edges(self):
+        """
+        construct all the edges from the json object
+        :return:
+        """
+        for item in self.json_obj['routes']:
+            edge = Edge(item)
+            key1 = edge.ports[0]
+            key2 = edge.ports[1]
+            if key1 not in self.edges:
+                self.edges[key1] = {}
+            if key2 not in self.edges:
+                self.edges[key2] = {}
+            self.edges[key1][key2] = edge.distance
+            self.edges[key2][key1] = edge.distance
 
     def get_routes(self):
         """

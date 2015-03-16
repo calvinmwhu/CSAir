@@ -1,16 +1,15 @@
-from csair.graph.route_map import RouteMap
-from csair.graph.city import City
+from csair.graph.graph import Graph
+from csair.graph.node import Node
 import sys
-
 
 class Query:
     """
     Query class is responsible for returning data based on user's query
     """
     def __init__(self):
-        self.map = RouteMap()
-        self.map.parse_data(RouteMap.url_link)
-        self.map.get_cites()
+        self.map = Graph()
+        self.map.parse_data(Graph.url_link)
+        self.map.get_nodes()
         self.map.get_routes()
         self.map.construct_map()
 
@@ -26,7 +25,7 @@ class Query:
     def get_city_info(self, code):
         """
         :param code: a city's code
-        :return: all the info of the city with code code, None if city with the code does not exist
+        :return: all the info of the city with code code, none if city with the code does not exist
         """
         if code not in self.map.cities.keys():
             return None
@@ -117,7 +116,7 @@ class Query:
         """
         :return: City with the highest number of edges
         """
-        hub = City()
+        hub = Node()
         connections = 0
         for city in self.map.cities.values():
             num_incident_cities = len(city.incidents)

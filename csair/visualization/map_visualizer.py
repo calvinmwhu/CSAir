@@ -1,5 +1,5 @@
-from csair.graph.route_map import RouteMap
-from csair.graph.city import City
+from csair.graph.graph import Graph
+from csair.graph.node import Node
 
 
 class Visualizer:
@@ -8,9 +8,9 @@ class Visualizer:
     """
     map_url_prefix = 'http://www.gcmap.com/mapui?P='
     def __init__(self):
-        self.map = RouteMap()
-        self.map.parse_data(RouteMap.url_link)
-        self.map.get_cites()
+        self.map = Graph()
+        self.map.parse_data(Graph.url_link)
+        self.map.get_nodes()
         self.map.get_routes()
         self.map.construct_map()
 

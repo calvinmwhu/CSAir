@@ -1,13 +1,16 @@
-from csair.graph.route_map import RouteMap
-from csair.graph.city import City
+from csair.graph.graph import Graph
+from csair.graph.node import Node
 
 
 def main():
-    map = RouteMap()
-    map.parse_data(RouteMap.url_link)
-    map.get_cites()
-    map.get_routes()
-    map.construct_map()
+    map = Graph()
+    map.parse_data(Graph.url_link)
+    map.get_nodes()
+    map.get_edges()
+
+    print(map.edges)
+    # map.get_routes()
+    # map.construct_map()
 
 
 if __name__ == "__main__":
