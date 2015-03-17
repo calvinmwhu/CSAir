@@ -8,10 +8,6 @@ class Visualizer:
     map_url_prefix = 'http://www.gcmap.com/mapui?P='
     def __init__(self):
         self.map = Graph()
-        self.map.parse_data(Graph.url_link)
-        self.map.get_nodes()
-        self.map.get_edges()
-
 
     def find_all_route(self):
         """

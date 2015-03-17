@@ -19,8 +19,14 @@ class Graph:
         self.nodes = {}
         self.edges = {}
         self.routes = []
+        self.source = []
+        self.parse_data()
+        self.get_nodes()
+        self.get_edges()
+        self.get_source()
 
-    def parse_data(self, url_str=None):
+
+    def parse_data(self, url_str=url_link):
         """
         Sends a HTTP GET request to get a html file and convert it to JSON format
         :param url_str: an yrl string to request the data
@@ -59,6 +65,9 @@ class Graph:
                 self.edges[key2] = {}
             self.edges[key1][key2] = edge.distance
             self.edges[key2][key1] = edge.distance
+
+    def get_source(self):
+        self.source = self.json_obj['data sources']
 
 
 

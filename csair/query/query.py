@@ -8,9 +8,6 @@ class Query:
     """
     def __init__(self):
         self.map = Graph()
-        self.map.parse_data(Graph.url_link)
-        self.map.get_nodes()
-        self.map.get_edges()
 
     def get_all_cities(self):
         """

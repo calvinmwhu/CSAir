@@ -6,10 +6,6 @@ from csair.graph.edge import Edge
 class EditRoute:
     def __init__(self):
         self.map = Graph()
-        self.map.parse_data(Graph.url_link)
-        self.map.get_nodes()
-        self.map.get_edges()
-
 
     def remove_city(self, city_code):
         if city_code not in self.map.nodes.keys():
@@ -38,7 +34,7 @@ class EditRoute:
             return
         else:
             node_obj = {'code': code, 'name': name, 'country': country, 'continent': continent, 'timezone': timezone,
-                        'coordinate': coordinates, 'population': population, 'region': region}
+                        'coordinates': coordinates, 'population': population, 'region': region}
             node = Node(node_obj)
             self.map.nodes[node.code] = node
 
@@ -60,8 +56,7 @@ class EditRoute:
             self.add_city(code,name,country,continent,timezone,coordinates,population,region)
         else:
             node_obj = {'code': code, 'name': name, 'country': country, 'continent': continent, 'timezone': timezone,
-                        'coordinate': coordinates, 'population': population, 'region': region}
+                        'coordinates': coordinates, 'population': population, 'region': region}
             node = Node(node_obj)
             self.map.nodes[node.code] = node
 
-    
