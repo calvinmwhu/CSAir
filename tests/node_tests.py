@@ -9,7 +9,7 @@ class TestCity(unittest.TestCase):
                     'country': "PE",
                     'continent': "South America",
                     'timezone': -5,
-                    'coordinates': {"S": 12, "W": 77},
+                    'coordinates': {"S": 12,"W": 77},
                     'population': 9050000,
                     'region': 1}
         self.city = Node(self.obj)
