@@ -24,7 +24,7 @@ class TestCity(unittest.TestCase):
         self.assertEqual(self.obj['population'], self.city.population)
         self.assertEqual(self.obj['region'], self.city.region)
 
-        print(self.city)
+        # print(self.city)
 
 if __name__ == '__main__':
     unittest.main()

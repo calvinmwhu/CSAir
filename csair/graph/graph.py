@@ -44,12 +44,12 @@ class Graph:
         map_data = data_file.read().decode('utf-8')
         self.json_obj = json.loads(map_data)
 
+
+
     def parse_data_from_file(self):
         file_path=dirname(dirname(dirname(__file__)))+'/route_network/online_data.json'
-        # print(file_path)
         file_obj = open(file_path)
         self.json_obj = json.load(file_obj)
-        # print(self)
 
 
     def get_nodes(self):
