@@ -12,7 +12,7 @@ class TestCity(unittest.TestCase):
                     'coordinates': {"S": 12,"W": 77},
                     'population': 9050000,
                     'region': 1}
-        self.city = Node(self.obj)
+        self.city = Node(**self.obj)
 
     def test_init(self):
         self.assertEqual(self.obj['code'], self.city.code)

@@ -1,26 +1,26 @@
 import copy
 
 class Node:
+    city_para = ['code', 'name', 'country', 'continent', 'timezone', 'coordinates', 'population', 'region']
     """
     A city defines a node in the graph.
     """
-    def __init__(self, obj={}):
+
+    def __init__(self, code=None, name=None, country=None, continent=None, timezone=None, coordinates=None,
+                 population=None, region=None):
         """
-        Initializes all the fields with a dictionary parameter passed in
+        Initializes all the fields with data passed in
         :param obj: A JSON object that represents a city
         :return:
         """
-        try:
-            self.code = obj['code']
-            self.name = obj['name']
-            self.country = obj['country']
-            self.continent = obj['continent']
-            self.timezone = obj['timezone']
-            self.coordinates = copy.deepcopy(obj['coordinates'])
-            self.population = obj['population']
-            self.region = obj['region']
-        except KeyError as e:
-            print(e)
+        self.code = code
+        self.name = name
+        self.country = country
+        self.continent = continent
+        self.timezone = timezone
+        self.coordinates = coordinates
+        self.population = population
+        self.region = region
 
 
     def __str__(self):

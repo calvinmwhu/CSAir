@@ -2,6 +2,9 @@ from csair.graph.node import Node
 from csair.graph.edge import Edge
 import json
 import urllib.request
+import os
+from os.path import dirname
+from os.path import join
 
 
 class Graph:
@@ -10,7 +13,7 @@ class Graph:
     """
     url_link = 'https://wiki.cites.illinois.edu/wiki/download/attachments/502596813/map_data.json?version=1&modificationDate=1408551729000&api=v2'
 
-    def __init__(self):
+    def __init__(self, file_name='online_data.json'):
         """
         constructor: initializes cities and json_obj to empty objects, initializes route to empty array
         :return:
@@ -20,7 +23,8 @@ class Graph:
         self.edges = {}
         self.routes = []
         self.source = []
-        self.parse_data()
+        # self.parse_data()
+        self.parse_data_from_file()
         self.get_nodes()
         self.get_edges()
         self.get_source()
@@ -40,13 +44,21 @@ class Graph:
         map_data = data_file.read().decode('utf-8')
         self.json_obj = json.loads(map_data)
 
+    def parse_data_from_file(self):
+        file_path=dirname(dirname(dirname(__file__)))+'/route_network/online_data.json'
+        # print(file_path)
+        file_obj = open(file_path)
+        self.json_obj = json.load(file_obj)
+        # print(self)
+
+
     def get_nodes(self):
         """
         Constructs city objects from the json_obj
         :return:
         """
         for item in self.json_obj['metros']:
-            node = Node(item)
+            node = Node(**item)
             self.nodes[node.code] = node
 
     def get_edges(self):

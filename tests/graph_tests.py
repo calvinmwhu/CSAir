@@ -11,6 +11,9 @@ class TestRouteMap(unittest.TestCase):
         self.assertTrue('metros' in self.map.json_obj.keys())
         self.assertTrue('routes' in self.map.json_obj.keys())
 
+    def test_parse_data_from_file(self):
+        self.map.parse_data_from_file()
+
     def test_get_nodes(self):
         self.assertTrue(len(self.map.nodes), 48)
 

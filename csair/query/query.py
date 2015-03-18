@@ -169,7 +169,7 @@ def main():
 
     while True:
         question = str(input("\nPlease select the question number: \n"))
-        if question not in queries:
+        if question not in queries.keys():
             print("cannot answer your question")
         elif question == '2':
             code = str(input("Please enter the city's code: \n"))
