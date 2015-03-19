@@ -120,7 +120,7 @@ class Query:
         hub = Node()
         neighbour_edges = {}
         connections = 0
-        for city_code in self.map.edges.keys():
+        for city_code in self.map.edges:
             neighbours = self.map.edges[city_code]
             num_incident_cities = len(neighbours)
             if num_incident_cities > connections:
@@ -128,6 +128,19 @@ class Query:
                 hub = self.map.nodes[city_code]
                 neighbour_edges = neighbours
         return {hub.name: neighbour_edges.keys()}
+
+    def get_city_with_fewest_outbound_fights(self):
+        fewest = Node()
+        neighbour_edges = {}
+        connections = sys.maxsize
+        for city_code in self.map.edges:
+            neighbours = self.map.edges[city_code]
+            num_incident_cities = len(neighbours)
+            if num_incident_cities < connections:
+                connections = num_incident_cities
+                fewest = self.map.nodes[city_code]
+                neighbour_edges = neighbours
+        return {fewest.name: neighbour_edges.keys()}
 
 
 def main():
@@ -142,6 +155,7 @@ def main():
     gcas = query.get_cities_average_size
     gc = query.get_continents
     ghc = query.get_hub_cities
+    gf = query.get_city_with_fewest_outbound_fights
 
     queries = {
         '1': gac,
@@ -153,7 +167,8 @@ def main():
         '3e': gsc,
         '3f': gcas,
         '3g': gc,
-        '3h': ghc
+        '3h': ghc,
+        '3i': gf
     }
 
     print(
@@ -169,7 +184,7 @@ def main():
         3f. Average size (by population) of all the cities served by CSAir
         3g. List of the continents served by CSAir and which cities are in them
         3h. CSAir's hub cities – the cities that have the most direct connections
-
+        3i. Get city with fewest outbound flights
         """
     )
 

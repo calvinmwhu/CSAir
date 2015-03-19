@@ -1,6 +1,6 @@
-import copy
+import sys
 
-class Node:
+class Node():
     city_para = ['code', 'name', 'country', 'continent', 'timezone', 'coordinates', 'population', 'region']
     """
     A city defines a node in the graph.
@@ -21,7 +21,42 @@ class Node:
         self.coordinates = coordinates
         self.population = population
         self.region = region
+        self.distance = sys.maxsize
+        self.parent = None
 
+    def __eq__(self, other):
+        # print("called")
+        if isinstance(other, Node):
+            return self.distance==other.distance
+        return NotImplemented
+
+    def __lt__(self, other):
+        # print("called")
+        if isinstance(other, Node):
+            return self.distance<other.distance
+        return NotImplemented
+
+    def __gt__(self, other):
+        # print("called")
+        if isinstance(other, Node):
+            return self.distance>other.distance
+        return NotImplemented
+    #
+    # def __ge__(self, other):
+    #     print("called")
+    #     if isinstance(other, Node):
+    #         return self.distance>=other.distance
+    #     return NotImplemented
+    #
+    # def __le__(self, other):
+    #     print("called")
+    #     if isinstance(other, Node):
+    #         return self.distance<=other.distance
+    #     return NotImplemented
+
+
+    def __repr__(self):
+        return str(self)
 
     def __str__(self):
         """
