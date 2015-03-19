@@ -4,7 +4,7 @@ from csair.query.query import Query
 
 class TestQuery(unittest.TestCase):
     def setUp(self):
-        self.query = Query()
+        self.query = Query(None,'online_data.json')
 
     def test_get_all_cities(self):
         cities = self.query.get_all_cities()

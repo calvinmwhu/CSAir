@@ -5,12 +5,22 @@ import sys
 
 
 class GetRouteInfo:
-    def __init__(self, route=[]):
-        self.map = Graph()
+    """
+    this class gives user an interface to query a map about the distance, time, cost of a route and the shortest route between two cities
+    """
+    def __init__(self, route=[], file_name=None):
+        if file_name:
+            self.map = Graph(file_name)
+        else:
+            self.map = Graph()
         self.route = [city.upper() for city in route]
         self.slope = 750 / (400 / 750)
 
+
     def get_total_distance(self):
+        """
+        calculates the total distance along a route path
+        """
         edges = self.map.edges
         total_dis = 0
         for i in range(len(self.route) - 1):
@@ -25,6 +35,9 @@ class GetRouteInfo:
 
 
     def get_total_cost(self):
+        """
+        calculates the total cost along a route path
+        """
         begin = 0.35
         edges = self.map.edges
         cost = 0.0;
@@ -70,6 +83,10 @@ class GetRouteInfo:
 
 
     def get_shortest_path(self, ori=None, des=None):
+        """
+        this function first runs Dijkstra's algorithm to determine the shortest length between the ori and every other nodes.
+        then it start with the destination node and find the shortest route backward
+        """
         nodes = self.map.nodes
         edges = self.map.edges
         ori = ori.upper()
@@ -77,7 +94,7 @@ class GetRouteInfo:
         solved = set()
         if ori not in nodes or des not in nodes:
             print("cities invalid")
-            return None
+            return []
         cities = [item[1] for item in nodes.items()]
         # print(cities)
         nodes[ori].distance = 0
@@ -140,12 +157,14 @@ def main():
                 getRouteInfo.get_total_time()
         elif question=='4':
             getRouteInfo = GetRouteInfo()
-            route = str(input("\n   Please enter origin and destination:\n")).split()
-            if len(route)<2:
+            twoCities = str(input("\n   Please enter origin and destination:\n")).split()
+            if len(twoCities)!=2:
                 print("invalid input")
                 continue
-            route=getRouteInfo.get_shortest_path(route[0],route[1])
-            getRouteInfo = GetRouteInfo(route)
+            route=getRouteInfo.get_shortest_path(twoCities[0],twoCities[1])
+            if len(route)==0:
+                continue
+            getRouteInfo.route=route
             getRouteInfo.get_total_distance()
             getRouteInfo.get_total_cost()
             getRouteInfo.get_total_time()

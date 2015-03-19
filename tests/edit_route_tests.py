@@ -6,7 +6,7 @@ from csair.edit_route.edit_route import EditRoute
 
 class TestEditRoute(unittest.TestCase):
     def setUp(self):
-        self.edit_route = EditRoute()
+        self.edit_route = EditRoute(None, 'online_data.json')
 
     def test_remove_city(self):
         self.edit_route.remove_city('LIM')
@@ -19,7 +19,7 @@ class TestEditRoute(unittest.TestCase):
             self.assertTrue('LIM' not in edges[city].keys())
 
     def testRemoveRoute(self):
-        self.edit_route = EditRoute()
+        self.edit_route = EditRoute(None,'online_data.json')
         self.edit_route.remove_route('TYO','OSA')
         edges = self.edit_route.map.edges
         self.assertTrue('OSA' not in edges['TYO'].keys())
@@ -30,14 +30,14 @@ class TestEditRoute(unittest.TestCase):
         self.assertTrue('CHA' in cities.keys())
 
     def testAddRoute(self):
-        self.edit_route = EditRoute()
+        self.edit_route = EditRoute(None,'online_data.json')
         self.edit_route.add_route('CHI','WAS',1000)
         edges = self.edit_route.map.edges
         self.assertTrue('WAS' in edges['CHI'].keys())
         self.assertTrue(edges['CHI']['WAS']==1000)
 
     def testEditCity(self):
-        self.edit_route = EditRoute()
+        self.edit_route = EditRoute(None,'online_data.json')
         self.edit_route.edit_city('KHI', 'Karachi', 'PK', 'Asia', 5, {"N" : 11, "E" : 74}, 16200000, 2)
         cities = self.edit_route.map.nodes
         self.assertTrue(cities['KHI'].coordinates == {"N" : 11, "E" : 74})

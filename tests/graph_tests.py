@@ -4,15 +4,14 @@ from csair.graph.graph import Graph
 
 class TestRouteMap(unittest.TestCase):
     def setUp(self):
-        self.map = Graph()
-
+        self.map = Graph('online_data.json')
     def test_parse_data(self):
         self.assertTrue('data sources' in self.map.json_obj.keys())
         self.assertTrue('metros' in self.map.json_obj.keys())
         self.assertTrue('routes' in self.map.json_obj.keys())
 
     def test_parse_data_from_file(self):
-        self.map.parse_data_from_file()
+        self.map.parse_data_from_file('online_data.json')
 
     def test_get_nodes(self):
         self.assertEqual(len(self.map.nodes), 48)

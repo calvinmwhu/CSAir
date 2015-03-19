@@ -8,9 +8,11 @@ class Query:
     Query class is responsible for returning data based on user's query
     """
 
-    def __init__(self, otherGraph=None):
+    def __init__(self, otherGraph=None, file_name=None):
         if otherGraph:
             self.map = otherGraph
+        elif file_name:
+            self.map = Graph(file_name)
         else:
             self.map = Graph()
 

@@ -2,17 +2,28 @@ from csair.graph.graph import Graph
 from csair.graph.node import Node
 from csair.graph.edge import Edge
 import json
+import copy
 from os.path import dirname
 
 
 class EditRoute:
-    def __init__(self, otherGraph=None):
+    """
+    this class modifies a existing graph, including remove/add/edit a city, remove/add a route, and save the modified result back to disk, the final result is saved in the file saved_data.json
+    """
+    def __init__(self, otherGraph=None, file_name=None):
         if otherGraph:
             self.map = otherGraph
+        elif file_name:
+            self.map = Graph(file_name)
         else:
             self.map = Graph()
 
     def remove_city(self, code=None):
+        """
+        removes a city and all its outbound edges and inbound edges
+        :param code:
+        :return:
+        """
         if code not in self.map.nodes.keys():
             print(code + " does not exist")
             return
@@ -27,6 +38,12 @@ class EditRoute:
 
 
     def remove_route(self, origin=None, destination=None):
+        """
+        simply delete a route from the edges structure
+        :param origin:
+        :param destination:
+        :return:
+        """
         edges = self.map.edges
         if origin not in edges.keys() or destination not in edges[origin].keys():
             print(origin + " or " + destination + " does not exist !")
@@ -36,6 +53,18 @@ class EditRoute:
 
     def add_city(self, code=None, name=None, country=None, continent=None, timezone=None, coordinates=None,
                  population=None, region=None):
+        """
+        first constructs a new city, then insert it into the nodes structure
+        :param code:
+        :param name:
+        :param country:
+        :param continent:
+        :param timezone:
+        :param coordinates:
+        :param population:
+        :param region:
+        :return:
+        """
         if code is None or name is None:
             return
         else:
@@ -46,6 +75,13 @@ class EditRoute:
 
 
     def add_route(self, origin=None, destination=None, distance=None):
+        """
+        construct a new route with ori and des, insert it into edges structure
+        :param origin:
+        :param destination:
+        :param distance:
+        :return:
+        """
         if origin is None or destination is None:
             return
         elif origin not in self.map.edges.keys():
@@ -55,6 +91,18 @@ class EditRoute:
 
     def edit_city(self, code=None, name=None, country=None, continent=None, timezone=None, coordinates=None,
                   population=None, region=None):
+        """
+        take a existing city and edit its data
+        :param code:
+        :param name:
+        :param country:
+        :param continent:
+        :param timezone:
+        :param coordinates:
+        :param population:
+        :param region:
+        :return:
+        """
         if code is None or name is None:
             return
         elif code not in self.map.nodes:
@@ -66,6 +114,10 @@ class EditRoute:
             self.map.nodes[node.code] = node
 
     def write_to_disk(self):
+        """
+        first convert our modified graph object into a json object, and write the json to file
+        :return:
+        """
         file_name = dirname(dirname(dirname(__file__))) + '/route_network/saved_data.json'
         file_obj = open(file_name, 'w')
 
@@ -76,7 +128,16 @@ class EditRoute:
         nodes = self.map.nodes
         edges = self.map.edges
         for node in nodes.values():
-            new_json['metros'].append(node.__dict__)
+            node_dict={}
+            node_dict['code']=node.code
+            node_dict['name']=node.name
+            node_dict['coordinates'] = copy.deepcopy(node.coordinates)
+            node_dict['country']=node.country
+            node_dict['continent']=node.continent
+            node_dict['timezone']=node.timezone
+            node_dict['population']=node.population
+            node_dict['region']=node.region
+            new_json['metros'].append(node_dict)
         for ori in edges.keys():
             for des in edges[ori].keys():
                 edge = {}
