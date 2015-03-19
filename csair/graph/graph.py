@@ -2,9 +2,7 @@ from csair.graph.node import Node
 from csair.graph.edge import Edge
 import json
 import urllib.request
-import os
 from os.path import dirname
-from os.path import join
 
 
 class Graph:
@@ -45,9 +43,8 @@ class Graph:
         self.json_obj = json.loads(map_data)
 
 
-
     def parse_data_from_file(self):
-        file_path=dirname(dirname(dirname(__file__)))+'/route_network/online_data.json'
+        file_path = dirname(dirname(dirname(__file__))) + '/route_network/online_data.json'
         file_obj = open(file_path)
         self.json_obj = json.load(file_obj)
 

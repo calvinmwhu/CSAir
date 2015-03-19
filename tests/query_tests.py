@@ -12,11 +12,13 @@ class TestQuery(unittest.TestCase):
 
     def test_get_longest_single_flight(self):
         flight = self.query.get_longest_single_flight()
-        self.assertEqual(flight, ['SYD', 'LAX'])
+        self.assertEqual(flight[0], ['SYD', 'LAX'])
+        self.assertEqual(flight[1],12051)
 
     def test_get_shortest_single_flight(self):
         flight = self.query.get_shortest_single_flight()
-        self.assertEqual(flight, ['WAS', 'NYC'])
+        self.assertEqual(flight[0], ['WAS', 'NYC'])
+        self.assertEqual(flight[1], 334)
 
     def test_get_biggest_city(self):
         city = self.query.get_biggest_city()

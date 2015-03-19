@@ -15,7 +15,7 @@ class TestRouteMap(unittest.TestCase):
         self.map.parse_data_from_file()
 
     def test_get_nodes(self):
-        self.assertTrue(len(self.map.nodes), 48)
+        self.assertEqual(len(self.map.nodes), 48)
 
     def test_get_edges(self):
         edges = self.map.edges

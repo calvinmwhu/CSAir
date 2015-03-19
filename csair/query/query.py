@@ -2,12 +2,17 @@ from csair.graph.graph import Graph
 from csair.graph.node import Node
 import sys
 
+
 class Query:
     """
     Query class is responsible for returning data based on user's query
     """
-    def __init__(self):
-        self.map = Graph()
+
+    def __init__(self, otherGraph=None):
+        if otherGraph:
+            self.map = otherGraph
+        else:
+            self.map = Graph()
 
     def get_all_cities(self):
         """
@@ -37,7 +42,7 @@ class Query:
             if route.distance > longest_dist:
                 longest_dist = route.distance
                 longest_flight = route.ports
-        return longest_flight
+        return (longest_flight, longest_dist)
 
     def get_shortest_single_flight(self):
         """
@@ -49,7 +54,7 @@ class Query:
             if route.distance < shortest_dist:
                 shortest_dist = route.distance
                 shortest_flight = route.ports
-        return shortest_flight
+        return (shortest_flight, shortest_dist)
 
     def get_average_distance(self):
         """
@@ -124,6 +129,7 @@ class Query:
                 neighbour_edges = neighbours
         return {hub.name: neighbour_edges.keys()}
 
+
 def main():
     query = Query()
     gac = query.get_all_cities
@@ -175,7 +181,7 @@ def main():
             code = str(input("Please enter the city's code: \n"))
             code = code.upper()
             city = queries[question](code)
-            if  city == None:
+            if city == None:
                 print("Cannot find city with code ", code)
             else:
                 print(city)

@@ -2,11 +2,15 @@ from csair.graph.graph import Graph
 from csair.graph.node import Node
 from csair.graph.edge import Edge
 import json
+from os.path import dirname
 
 
 class EditRoute:
-    def __init__(self):
-        self.map = Graph()
+    def __init__(self, otherGraph=None):
+        if otherGraph:
+            self.map = otherGraph
+        else:
+            self.map = Graph()
 
     def remove_city(self, code=None):
         if code not in self.map.nodes.keys():
@@ -25,7 +29,7 @@ class EditRoute:
     def remove_route(self, origin=None, destination=None):
         edges = self.map.edges
         if origin not in edges.keys() or destination not in edges[origin].keys():
-            print(origin + " or "+ destination +" does not exist !")
+            print(origin + " or " + destination + " does not exist !")
             return
         del edges[origin][destination]
 
@@ -62,12 +66,13 @@ class EditRoute:
             self.map.nodes[node.code] = node
 
     def write_to_disk(self):
-        file_name = '../../route_network/saved_data.json'
+        file_name = dirname(dirname(dirname(__file__))) + '/route_network/saved_data.json'
         file_obj = open(file_name, 'w')
+
         new_json = {}
-        new_json['data sources']=self.map.source
-        new_json['metros']=[]
-        new_json['routes']=[]
+        new_json['data sources'] = self.map.source
+        new_json['metros'] = []
+        new_json['routes'] = []
         nodes = self.map.nodes
         edges = self.map.edges
         for node in nodes.values():
@@ -75,11 +80,12 @@ class EditRoute:
         for ori in edges.keys():
             for des in edges[ori].keys():
                 edge = {}
-                edge['ports']=[ori,des]
-                edge['distance']=edges[ori][des]
+                edge['ports'] = [ori, des]
+                edge['distance'] = edges[ori][des]
                 new_json['routes'].append(edge)
         json.dump(new_json, file_obj)
         file_obj.close()
+
 
 def main():
     edit_route = EditRoute()
@@ -117,7 +123,7 @@ def main():
             continue
         elif num == '2' or num == '4':
             for para in Edge.edge_para:
-                if para=='distance' and num=='2':
+                if para == 'distance' and num == '2':
                     continue
                 info_dict[para] = None
                 str_value = str(input("enter route's %s: " % para)).upper()
@@ -148,18 +154,18 @@ def main():
                         info_dict[para] = int_value
                 else:
                     str_value = str(input("enter city's %s: " % para))
-                    if para=='code':
+                    if para == 'code':
                         str_value = str_value.upper()
                     if len(str_value) > 0:
                         info_dict[para] = str_value
             print(info_dict)
-        elif num=='1':
+        elif num == '1':
             info_dict['code'] = None;
-            input_val = str(input("enter city's code: " )).upper()
-            if len(input_val)>0:
-                info_dict['code']=input_val
+            input_val = str(input("enter city's code: ")).upper()
+            if len(input_val) > 0:
+                info_dict['code'] = input_val
         inputs[num](**info_dict)
-        if num=='6':
+        if num == '6':
             break
 
 
